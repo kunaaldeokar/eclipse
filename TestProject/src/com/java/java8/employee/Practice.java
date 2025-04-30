@@ -46,9 +46,6 @@ List<Employee> list = new ArrayList<Employee>();
 		list.add(new Employee(277, "Anuj", 31, "Male", "Product Development", 2012, 35700.0));
 		
 		
-		List<String> result = list.stream().map(Employee::getDepartment).distinct().toList();
-
-		System.out.println(result);
 		
 		
 		
