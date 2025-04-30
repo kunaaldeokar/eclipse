@@ -46,10 +46,9 @@ List<Employee> list = new ArrayList<Employee>();
 		list.add(new Employee(277, "Anuj", 31, "Male", "Product Development", 2012, 35700.0));
 		
 		
-		Map<String, Long> map = list.stream().collect(Collectors.groupingBy(Employee::getGender, Collectors.counting()));		
-		
-		map.entrySet().forEach(System.out::println);
-		
+		List<String> result = list.stream().map(Employee::getDepartment).distinct().toList();
+
+		System.out.println(result);
 		
 		
 		
