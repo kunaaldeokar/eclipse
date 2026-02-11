@@ -1,12 +1,14 @@
 package com.java.java8.employee;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.DoubleSummaryStatistics;
 import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
@@ -46,9 +48,106 @@ List<Employee> list = new ArrayList<Employee>();
 		list.add(new Employee(277, "Anuj", 31, "Male", "Product Development", 2012, 35700.0));
 		
 		
-		Map<String, Double> map = list.stream().collect(Collectors.groupingBy(Employee::getGender, Collectors.averagingInt(Employee::getAge)));
+	// group employees by name	
+		
+		Map<String, List<Employee>> map = list.stream().collect(Collectors.groupingBy(Employee::getName, Collectors.toList()));
 		
 		map.entrySet().forEach(System.out::println);
+		
+		
+	// find number of male and female employee	
+		
+		Map<String, Long> count = list.stream().collect(Collectors.groupingBy(Employee::getGender, Collectors.counting()));
+		
+		count.entrySet().forEach(System.out::println);
+		
+		
+	// list down all the names of department
+		
+		List<String> departmentList = list.stream().map(Employee::getDepartment).toList();
+		
+		System.out.println(departmentList);
+		
+		
+	// find average age of male and female employee
+		
+		Map<String, Double> ageAvg = list.stream().collect(Collectors.groupingBy(Employee::getGender, Collectors.averagingInt(Employee::getAge)));
+		
+		ageAvg.entrySet().forEach(System.out::println);
+		
+		
+	// 	find the number of employees in the list
+		
+		Long eCount = list.stream().count();
+		
+		System.out.println(eCount);
+		
+		
+	// find the number of female employees in the list
+		
+		Long fCount = list.stream().filter(emp -> emp.getGender().equalsIgnoreCase("female")).count();
+		
+		System.out.println(fCount);
+		
+		
+	// sort the list according to their salary
+		
+		List<Employee> salarySorted = list.stream().sorted(Comparator.comparing(Employee::getSalary)).toList();
+		
+		salarySorted.forEach(System.out::println);
+		
+		
+	// sort the list according to their salary in descending order
+	
+		List<Employee> reverseSort = list.stream().sorted(Comparator.comparing(Employee::getSalary).reversed()).toList();
+		
+		reverseSort.forEach(System.out::println);
+		
+		
+	// find out the highest salary of male and female employee
+		
+		Map<String, Optional<Employee>> highestMF = list.stream().collect(Collectors.groupingBy(Employee::getGender, Collectors.maxBy(Comparator.comparing(Employee::getSalary))));
+		
+		highestMF.entrySet().forEach(emp -> {
+			System.out.println(emp.getKey()+" : "+emp.getValue().get());
+		});
+		
+		
+	// find the youngest employee in the Production Department
+		
+		Employee emp = list.stream().filter(e -> e.getGender().equalsIgnoreCase("male") && e.getDepartment().equalsIgnoreCase("Product Development")).min(Comparator.comparing(Employee::getAge)).get();
+		
+		System.out.println(emp);
+		
+		
+	// find the average salary and the total salary in single line setup
+		
+		DoubleSummaryStatistics stat = list.stream().collect(Collectors.summarizingDouble(Employee::getSalary));
+		
+		System.out.println(stat.getAverage());
+		System.out.println(stat.getSum());
+		
+		
+	// categorize the employees by department
+		
+		Map<String, List<Employee>> grouped = list.stream().collect(Collectors.groupingBy(Employee::getDepartment, Collectors.toList()));
+		
+		grouped.entrySet().forEach(System.out::println);
+		
+		
+	// group the employees according to their ages above and below 30
+		
+		Map<String, List<Employee>> ageGroup = list.stream().collect(Collectors.groupingBy(empl -> empl.getAge() >= 30 ? "Above 30" : "Below 30"));
+		
+	    ageGroup.entrySet().forEach(System.out::println);
+	    
+	    
+	// find the list of employees having smallest age if there are multiple employees with same smallest age
+	    
+	    List<Employee> smallAgeGroup = list.stream().filter(age -> age.equals(list.stream().min(Comparator.comparing(Employee::getAge)).get())).toList();
+	    
+	    System.out.println(smallAgeGroup);
+	    
 		
 		
 		

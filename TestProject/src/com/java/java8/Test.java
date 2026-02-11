@@ -4,8 +4,10 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.IntSummaryStatistics;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -58,6 +60,8 @@ public class Test {
 		
 		Integer largestOpt = list2.stream().max(Comparator.comparing(e -> e)).get();
 		
+		Integer largestOpt2 = list2.stream().max(Comparator.comparing(Integer::valueOf)).get();
+		
 		System.out.println("Largest Element is : "+largest);
 		
 		System.out.println();
@@ -86,6 +90,13 @@ public class Test {
 		 represent the stream of unicode of each characters. */
 		
 		System.out.println(occ);
+		
+		// first repeating character along with it's count
+		
+		Entry<Character, Long> entry = charList.stream().filter(e -> e!=' ' && Collections.frequency(charList, e) > 1)
+					.collect(Collectors.groupingBy(Function.identity(), LinkedHashMap::new, Collectors.counting())).entrySet().stream().findFirst().get();
+		
+		System.out.println(entry);
 		
 		System.out.println();
 		
