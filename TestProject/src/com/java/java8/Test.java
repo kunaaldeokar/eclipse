@@ -156,6 +156,8 @@ public class Test {
 		
 		Integer sum = list6.stream().reduce((a,b) -> a+b).get();
 		
+		Integer sum2 = list6.stream().collect(Collectors.summingInt(Integer::valueOf));
+		
 		System.out.println("sum of all the elements : "+sum);
 		
 		System.out.println();

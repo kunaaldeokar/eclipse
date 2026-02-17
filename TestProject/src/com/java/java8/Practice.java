@@ -3,6 +3,7 @@ package com.java.java8;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.IntSummaryStatistics;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -89,9 +90,43 @@ public class Practice {
 				
 				System.out.println(entry);
 				
+				
+				
+		// filter the list with specific digit start (e.g. numbers starting with 1)
+				
+				List<Integer> list4 = Arrays.asList(11,54,56,3,54,111,12,34,64,13,45);
+				
+				List<Integer> starts = list4.stream().filter(st -> st.toString().startsWith("1")).mapToInt(Integer::valueOf).boxed().collect(Collectors.toList());
 		
+				System.out.println(starts);
+				
+				
+		// sort the list in descending order by java 8
+				
+				List<Integer> list5 = Arrays.asList(11,54,56,3,54,111,12,34,64,13,45);
 		
-		
+				List<Integer> reverseOrder = list5.stream().sorted(Comparator.reverseOrder()).collect(Collectors.toList());
+				
+				System.out.println(reverseOrder);
+							
+	
+		// find the sum of all the elements in the list
+						
+				List<Integer> list6 = Arrays.asList(11,54,56,3,54,111,12,34,64,13,45);	
+				
+				Integer collect = list6.stream().collect(Collectors.summingInt(Integer::valueOf));
+				
+				Integer sum = list6.stream().reduce((a,b) -> a+b).get();
+				
+				IntSummaryStatistics stat = list6.stream().collect(Collectors.summarizingInt(Integer::valueOf));
+				
+				System.out.println(stat.getSum());
+						
+				
+				
+				
+				
+				
 		
 		
 		
