@@ -353,7 +353,22 @@ public class Test {
         System.out.println(result19);
         
  
-// this is a test comment to test if git is working or not on this platform        
+// find the first non-repeating character in the string using stream api
+		
+        	String s20 = "Hi I am a good java developer and I dont quit";
+        
+     		// approach 1
+     		String first = Stream.of(s20.split("")).collect(Collectors.toList()).stream().filter(e -> Collections.frequency(Stream.of(s20.split("")).
+     				collect(Collectors.toList()), e) == 1).collect(Collectors.toList()).stream().findFirst().get();
+
+     		System.out.println(first);
+     		
+     		// approach 2
+     		LinkedHashMap<String,Long> map = Stream.of(s20.split("")).collect(Collectors.groupingBy(Function.identity(), LinkedHashMap::new, Collectors.counting()));
+     		
+     		Entry<String,Long> findfirst = map.entrySet().stream().filter(e -> e.getValue() == 1).findFirst().get();
+     		
+     		System.out.println(findfirst.getKey());   
 		 
 		
 		
